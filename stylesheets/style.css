@@ -1,4 +1,177 @@
+@font-face {
+    font-family: 'BaileyScript';
+    src: url('BaileyScript/BaileyScript.ttf');
+}
+
 body{
     margin: 0;
     background-color: black;
+    color: white;
+    font-family: BaileyScript;
+}
+
+.infobar{
+    padding: 10pt;
+    background: url('../icons/aurora.jpg') center center fixed;
+    background-size: cover;
+}
+
+#mainAssignmentSection{
+    background: url('../icons/forest.jpg') center center fixed;
+    background-size: cover;
+}
+
+.section-container{
+    width: 100vw;
+}
+
+.module-container{
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10pt);
+    -webkit-backdrop-filter: blur(10pt);
+    padding: 4vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 4vw;
+}
+
+.module{
+    margin: 1.25%;
+    padding: 10pt;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10pt);
+    -webkit-backdrop-filter: blur(10pt);
+    color: black;
+    border-radius: 15pt;
+    display: inline-block;
+}
+
+.module .title{
+    font-size: 18pt;
+    font-weight: 700;
+    padding: 5pt;
+    border-bottom: solid 1pt rgb(146, 146, 146);
+}
+
+.list{
+    padding: 5pt;
+}
+
+.list-item{
+    min-height: 25pt;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10pt;
+    border-radius: 5pt;
+    cursor: default;
+    font-size: 13pt;
+    font-weight: 500;
+}
+
+.list-item:hover{
+    background-color: lightskyblue;
+}
+
+.delete-button:hover{
+    background-color: lightcoral;
+}
+
+.list-item-class{
+    font-size: 10pt;
+    margin-bottom: 1pt;
+    font-weight: 400;
+}
+
+.list-item-toolbar{
+    height: 20pt;
+    position: absolute;
+    top: 2pt;
+    right: 2pt;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+}
+
+.list-item:hover .list-item-toolbar{
+    opacity: 1;
+}
+
+.list-item-toolbar img{
+    height: 13pt;
+    padding: 3pt;
+    border-radius: 5pt;
+}
+
+.list-item-toolbar img:hover{
+    background-color: navy;
+}
+
+.add-list-item{
+    color: rgb(117, 117, 117);
+    cursor: pointer;
+}
+
+.add-list-item:hover{
+    background-color: lightgray;
+}
+
+.center-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+.prompt .card{
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10pt);
+    -webkit-backdrop-filter: blur(10pt);
+    color: black;
+    height: auto;
+    max-width: 75vh;
+    width: 50vw;
+    padding: 15pt;
+    border-radius: 15pt;
+    z-index: 15;
+    position: relative;
+}
+
+.close-card{
+    height: 20pt;
+    width: 20pt;
+    position: absolute;
+    top: 20pt;
+    right: 20pt;
+    cursor: pointer;
+}
+
+.card .title{
+    font-size: 13pt;
+    padding: 5pt;
+    border-bottom: solid 1pt lightgray;
+}
+
+.card .title .assignment{
+    font-size: 25pt;
+    font-weight: 600;
+}
+
+.screen-clicker{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }

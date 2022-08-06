@@ -1,27 +1,84 @@
-<html>
-    <head>
-        <!-- This is the .by action code library -->
-        <script src='system/library.js'></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel='stylesheet' href='stylesheets/style.css'>
+    <link rel='stylesheet' media='screen and (hover: hover) and (pointer: fine)' href='stylesheets/desktop.css'>
+    <link rel='stylesheet' media='screen and (hover: none) and (pointer: coarse)' href='stylesheets/mobile.css'>
+    <script src='scripts/index.js'></script>
+</head>
+<body>
 
-        <!-- This section will be erased after the page is loaded on the client side -->
-        <div id='backbone'>
-            <script src='system/compile.js'></script>
-            <script src='system/main.js'></script>
-        </div>
-        
-        <!-- Insert your scripts here -->
-        <script src='scripts/index.js'></script>
+    <div class='infobar center-content'>
+        <div id='date'>Friday, August 5th</div>
+    </div>
 
-        <style>
-            html{
-                background-color: black;
-            }
-        </style>
-    </head>
-    <!-- This is the true body of the document, set to display: none so content is only shown when fully converted to HTML -->
-    <body id='bodyDOM' style='display:none;'>
-        <div id='body'>
-            <!-- The body content declared in the .by file will be inserted here -->
+    <div class='section-container' id='mainAssignmentSection'>
+        <div class='module-container' id='mainAssignmentModules'>
+
+            <div class='module' id='pastDueModule'>
+                <div class='title'>
+                    Past Due
+                </div>
+                <div class='list'>
+                    <div id='past-due_listItemContainer'>
+
+                    </div>
+                    <div class='list-item add-list-item' onclick='createAssignment()'>
+                        <div class='list-item-content'>
+                            <div class='list-item-assignment'>Add Assignment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='module' id='pastDueModule'>
+                <div class='title'>
+                    Tonight's Homework
+                </div>
+                <div class='list'>
+                    <div id='tonights-homework_listItemContainer'>
+
+                    </div>
+                    <div class='list-item add-list-item' onclick='createAssignment()'>
+                        <div class='list-item-content'>
+                            <div class='list-item-assignment'>Add Assignment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </body>
+    </div>
+
+    <div class='section-container'>
+
+    </div>
+
+    <div class='prompt center-content' id='expandListAssignmentPrompt'>
+        <div class='screen-clicker' onclick='closePrompt(this)'></div>
+        <div class='card'>
+            <img src='icons/black close.png' class='close-card' onclick='closePrompt(this.parentNode)'>
+            <div class='title'>
+                <div class='class' id='expandAssignmentClass'>Class Name</div>
+                <div class='assignment' id='expandAssignmentTitle'>Assignment Title</div>
+            </div>
+            <div class='list'>
+                <div class='list-item' onclick='completeAssignment()'>
+                    <div class='list-item-content'>
+                        <div class='list-item-assignment'>Complete Assignment</div>
+                    </div>
+                </div>
+                <div class='list-item delete-button' onclick='deleteAssignment()'>
+                    <div class='list-item-content'>
+                        <div class='list-item-assignment'>Delete Assignment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
 </html>
