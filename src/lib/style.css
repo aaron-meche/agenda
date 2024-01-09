@@ -1,0 +1,57 @@
+.page{
+    display: grid;
+    row-gap: 2rem;
+    padding: 2rem var(--inline-moat);
+    font-size: 12pt;
+    font-weight: 400;
+}
+.page.inline-delete{
+    padding-inline: 0;
+}
+.page.block-delete{
+    padding-block: 0;
+}
+.page.padding-delete{
+    padding: 0;
+}
+
+
+section h2{
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+.list{
+    max-width: 25rem;
+    display: grid;
+    border: solid 1pt var(--l3);
+    border-radius: 4pt;
+}
+.list .item{
+    padding: 1rem 1rem;
+    opacity: 0.75;
+    border: solid 1pt transparent;
+    border-radius: inherit;
+}
+.list .item:hover{
+    background: var(--l1);
+    opacity: 1;
+    border-color: var(--l4);
+}
+.list .item .title{
+    font-weight: 500;
+}
+.list .item .status{
+    opacity: 0.5;
+}
+
+.list .icon.item{
+    display: grid;
+    grid-template-columns: min-content auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+.list .icon.item .icon{
+    width: 2rem;
+    text-align: center;
+}
