@@ -27,9 +27,9 @@
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
         gap: 1rem;
-        padding: 1rem var(--inline-moat);
+        padding: 1rem calc(var(--inline-moat) + 1rem);
         border-bottom: solid 1pt var(--l3);
-        font-size: 12pt;
-        font-weight: 500;
+        font-size: 16pt;
+        font-weight: 600;
     }
 </style>

@@ -1,18 +1,17 @@
-.page{
+.title-bar{
+    padding: 1rem var(--inline-moat);
+}
+.title-bar .button{
     display: grid;
-    row-gap: 2rem;
-    padding: 2rem var(--inline-moat);
-    font-size: 12pt;
-    font-weight: 400;
+    grid-template-columns: min-content auto;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    border-radius: 4pt;
 }
-.page.inline-delete{
-    padding-inline: 0;
-}
-.page.block-delete{
-    padding-block: 0;
-}
-.page.padding-delete{
-    padding: 0;
+.title-bar .button:hover{
+    opacity: 1;
+    color: var(--accent);
 }
 
 
@@ -20,38 +19,38 @@ section h2{
     margin-left: 1rem;
     margin-bottom: 0.5rem;
 }
-.list{
-    max-width: 25rem;
+.grid{
     display: grid;
-    border: solid 1pt var(--l3);
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    background: var(--l1);
+    padding: 0.5rem;
     border-radius: 4pt;
 }
-.list .item{
+.grid.list{
+    grid-template-columns: 1fr;
+}
+.grid .item{
     padding: 1rem 1rem;
-    opacity: 0.75;
     border: solid 1pt transparent;
     border-radius: inherit;
 }
-.list .item:hover{
-    background: var(--l1);
+.grid .item:hover{
+    background: var(--l2);
     opacity: 1;
-    border-color: var(--l4);
 }
-.list .item .title{
+.grid .item .title{
     font-weight: 500;
 }
-.list .item .status{
+.grid .item .status{
     opacity: 0.5;
 }
-
-.list .icon.item{
+.grid .icon.item{
     display: grid;
     grid-template-columns: min-content auto;
     align-items: center;
     gap: 1rem;
 }
-
-.list .icon.item .icon{
+.grid .icon.item .icon{
     width: 2rem;
     text-align: center;
 }

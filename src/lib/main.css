@@ -51,7 +51,7 @@
 :root{
 	--hue: 255;
 	--sat: 8%;
-	--strt: 4%;
+	--strt: 8%;
 	--diff: 4%;
 
 	--accent: hsl(var(--hue), 48%, 64%);
@@ -69,7 +69,7 @@
 	--l6: hsl(var(--hue), var(--sat), calc(var(--strt) + (6 * var(--diff))));
     --alert: hsl(0, 70%, 58%);
 
-	--inline-moat: 8rem;
+	--inline-moat: 15vw;
 }
 
 @media (prefers-color-scheme: light) {
@@ -83,13 +83,9 @@
 	}
 }
 
-img.icon{
-    display: inline-block;
-    height: 1em;
-}
-@media (prefers-color-scheme: dark) {
-    img.icon{
-        filter: invert(1) !important;
+@media (orientation: portrait) {
+    :root{
+        --inline-moat: 5vw;
     }
 }
 
@@ -103,6 +99,8 @@ body{
     font-family: BaileyScript !important;
     color: var(--contrast);
 }
+
+
 
 h1,h2,h3,h4,h5,h6,a,img,button,input{
     all: unset;
@@ -127,6 +125,27 @@ input::placeholder{
     font-family: BaileyScript;
     opacity: 0.8;
 }
+
+
+
+.page{
+    display: grid;
+    row-gap: 2rem;
+    padding: 2rem var(--inline-moat);
+    font-size: 12pt;
+    font-weight: 400;
+}
+.page.inline-delete{
+    padding-inline: 0;
+}
+.page.block-delete{
+    padding-block: 0;
+}
+.page.padding-delete{
+    padding: 0;
+}
+
+
 
 .horizontal-scroll{
     width: calc(100vw - (2 * var(--inline-moat)));
