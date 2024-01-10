@@ -1,15 +1,12 @@
 <script>
     import "$lib/main.css"
     import "$lib/style.css"
+    import "$lib/firebase"
     import Header from "./Header.svelte";
     import { db } from "$lib/data"
     import { beforeUpdate, onMount } from "svelte"
 
-    beforeUpdate(() => {
-        // db.subscribe(data => {
-        //     document.documentElement.style.setProperty("--hue", data.hue)
-        // })
-    })
+    
 
 </script>
 

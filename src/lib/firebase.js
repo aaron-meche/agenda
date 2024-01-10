@@ -6,6 +6,7 @@ import {
     getAuth, 
     signInWithRedirect,
     GoogleAuthProvider,
+    getRedirectResult,
     onAuthStateChanged
 } from 'firebase/auth';
 
