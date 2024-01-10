@@ -33,6 +33,7 @@ const provider = new GoogleAuthProvider();
 export function signInWithGoogle() {
     signInWithRedirect(auth, provider);
 }
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
