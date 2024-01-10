@@ -1,6 +1,15 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';  // If you're using Firestore
-import 'firebase/auth';       // If you're using Authentication
+import { initializeApp } from 'firebase/app';
+
+import { getFirestore } from 'firebase/firestore';
+
+import { 
+    getAuth, 
+    signInWithRedirect,
+    GoogleAuthProvider,
+    onAuthStateChanged
+} from 'firebase/auth';
+
+// import { db } from "$lib/data"
 
 const firebaseConfig = {
     apiKey: "AIzaSyDSo5LwVnxGGemhbuLabUE7ZRwDC1yBLtg",
@@ -11,7 +20,24 @@ const firebaseConfig = {
     appId: "1:361127830506:web:abdfbd7ff9ca13699a8893"
 };
 
-firebase.initializeApp(firebaseConfig);
+// App Base
+const app = initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-export const db = firebase.firestore();
+// Database
+const db = getFirestore(app);
+
+// Authentication
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+    // Google Sign In
+export function signInWithGoogle() {
+    signInWithRedirect(auth, provider);
+}
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        console.log(uid)
+    } else {
+        console.log("no user")
+    }
+});
