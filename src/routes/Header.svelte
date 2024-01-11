@@ -1,7 +1,7 @@
 <script>
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
-    import { db } from "$lib/data"
+    import { localStore } from "$lib/data"
 
 
 </script>
@@ -10,7 +10,7 @@
 
 <div class="wrapper">
     <div>
-        Aaron Meche
+        Agenda
     </div>
 
     <div class="right" style="margin-left: auto">

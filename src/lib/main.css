@@ -49,13 +49,13 @@
 
 
 :root{
-	--hue: 255;
+	--hue: 220;
 	--sat: 8%;
 	--strt: 8%;
 	--diff: 4%;
 
 	--accent: hsl(var(--hue), 48%, 64%);
-	--accent-transparent: hsl(var(--hue), 48%, 64%, 40%);
+	--accent-transparent: hsl(var(--hue), 48%, 48%, 40%);
     --true-accent: hsl(255, 89%, 64%);
 	--contrast: hsl(var(--hue), 0%, 92%);
 	--contrast-transparent: hsl(var(--hue), 0%, 92%, 40%);
@@ -91,6 +91,9 @@
 
 i{
     color: var(--font);
+}
+i.active{
+    color: var(--accent);
 }
 
 body{
@@ -132,7 +135,7 @@ input::placeholder{
     display: grid;
     row-gap: 2rem;
     padding: 2rem var(--inline-moat);
-    font-size: 12pt;
+    font-size: 1rem;
     font-weight: 400;
 }
 .page.inline-delete{
@@ -157,6 +160,10 @@ input::placeholder{
     overflow-y: hidden;
     font-size: 0;
     white-space: nowrap;
+}
+.horizontal-scroll.default{
+    width: 100%;
+    padding: 0;
 }
 .horizontal-scroll > *{
     display: inline-block;

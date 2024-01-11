@@ -42,12 +42,12 @@ let initial_db = {
     active_class_id: null,
 }
 
-const app_title = "agenda 1/8 5"
-const storage_ref = `localDB-${app_title}`
+const app_title = "agenda 1"
+const storage_ref = `localStore-${app_title}`
 
-export const db = storage.exists(storage_ref) ? writable(JSON.parse(storage.read(storage_ref))) : writable(initial_db)
+export const localStore = storage.exists(storage_ref) ? writable(JSON.parse(storage.read(storage_ref))) : writable(initial_db)
 
-db.subscribe(db => {
+localStore.subscribe(db => {
     let data
     
     if (Object.keys(db) == undefined) {
