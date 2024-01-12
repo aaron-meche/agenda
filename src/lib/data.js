@@ -2,44 +2,9 @@ import { writable } from 'svelte/store'
 import { storage } from '$lib/index'
 
 let initial_db = {
-    classes: [
-        {
-            name: "MATH 1551",
-            label: "Math",
-            icon: "calculator",
-            hue: 0,
-            id: 0,
-        },
-        {
-            name: "CSC 1551",
-            label: "Computer Science",
-            icon: "laptop-code",
-            hue: 230,
-            id: 1,
-        },
-        {
-            name: "BIOL 1001",
-            label: "Biology",
-            icon: "dna",
-            hue: 180,
-            id: 2,
-        },
-        {
-            name: "GEOL 1301",
-            label: "Geology",
-            icon: "mountain",
-            hue: 120,
-            id: 3,
-        },
-        {
-            name: "ART 1001",
-            label: "Art",
-            icon: "paintbrush",
-            hue: 300,
-            id: 4,
-        },
-    ],
-    active_class_id: null,
+    is_logged_in: false,
+    uid: null,
+    name: null,
 }
 
 const app_title = "agenda 1"
@@ -50,8 +15,9 @@ export const localStore = storage.exists(storage_ref) ? writable(JSON.parse(stor
 localStore.subscribe(db => {
     let data
     
-    if (Object.keys(db) == undefined) {
+    if (JSON.stringify(db) == undefined) {
         data = initial_db
+        alert("Corrupt Data")
         if (typeof window !== "undefined") window.open("/", "_self")
     }
     else {

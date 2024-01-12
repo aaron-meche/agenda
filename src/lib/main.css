@@ -110,12 +110,12 @@ h1,h2,h3,h4,h5,h6,a,img,button,input{
     display: block;
 }
 h1{
-    font-size: 24pt;
+    font-size: 2rem;
     font-weight: 700;
     letter-spacing: -0.2pt;
 }
 h2{
-    font-size: 16pt;
+    font-size: 1.4rem;
     font-weight: 600;
 }
 button{
@@ -127,51 +127,4 @@ input{
 input::placeholder{
     font-family: BaileyScript;
     opacity: 0.8;
-}
-
-
-
-.page{
-    display: grid;
-    row-gap: 2rem;
-    padding: 2rem var(--inline-moat);
-    font-size: 1rem;
-    font-weight: 400;
-}
-.page.inline-delete{
-    padding-inline: 0;
-}
-.page.block-delete{
-    padding-block: 0;
-}
-.page.padding-delete{
-    padding: 0;
-}
-
-
-
-.horizontal-scroll{
-    width: calc(100vw - (2 * var(--inline-moat)));
-    padding: 0 var(--inline-moat);
-    
-    display: flex;
-    background: none;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    font-size: 0;
-    white-space: nowrap;
-}
-.horizontal-scroll.default{
-    width: 100%;
-    padding: 0;
-}
-.horizontal-scroll > *{
-    display: inline-block;
-    font-size: initial;
-}
-.horizontal-scroll::-webkit-scrollbar{
-    display: none;
-}
-.horizontal-scroll::-moz-progress-bar{
-    display: none;
 }

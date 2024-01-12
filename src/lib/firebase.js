@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from "firebase/firestore";
+import { getDatabase, ref, set, get, onValue } from "firebase/database";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously, onAuthStateChanged, signOut } from 'firebase/auth';
 import { localStore } from "$lib/data";
 
@@ -13,31 +13,35 @@ const firebaseConfig = {
 };
 
 let is_logged_in, uid
+localStore.subscribe(data => {
+    is_logged_in = data.is_logged_in
+    uid = data.uid
+})
 
 // App Base
 const app = initializeApp(firebaseConfig);
 
 // Database
-const database = getFirestore(app);
+const database = getDatabase(app);
     // Smart User Ref
 function getUserRef(path) {
     return ref(database, `users/${uid}/${path}`)
 }
     // Write
 export function writeData(path, value) {
-    if (!is_logged_in) return
+    if (typeof document == "undefined") return
 
     set(getUserRef(path), value);
 }
     // Push
 export function pushData(path, value) {
-    if (!is_logged_in) return
+    if (typeof document == "undefined") return
 
     set(getUserRef(path), value);
 }
     // Read
 export function readData(path, callback) {
-    if (!is_logged_in) return
+    if (typeof document == "undefined") return
 
     get(getUserRef(path))
         .then(snapshot => callback(snapshot.val(), snapshot.exists()))
@@ -47,9 +51,21 @@ export function readData(path, callback) {
 }
     // Subscribe Read
 export function subscribeData(path, callback) {
-    if (!is_logged_in) return
+    if (typeof document == "undefined") return
+    
+    onValue(getUserRef(path), (snapshot) => {
+        if (snapshot.exists()) {
+            callback(snapshot.val())
+        }
+    })
+}
+    // Delete
+export function deleteData(path, callback) {
+    if (typeof document == "undefined") return
 
-    onValue(getUserRef(path), (snapshot) => callback(snapshot.val(), snapshot.exists()))
+    database.ref(`users/${uid}/${path}`).remove()
+    console.log("Done")
+    callback()
 }
 
 // Authentication
@@ -99,11 +115,12 @@ onAuthStateChanged(auth, (user) => {
     is_logged_in = (user ? true : false)
     uid = is_logged_in ? user.uid : null
 
-    console.log("login: " + is_logged_in)
-
-    localStore.update(data => {
-        data.logged_in = true
-        data.uid = (is_logged_in ? user.uid : null)
-        return data
-    })
+    if (user) {
+        localStore.update(data => {
+            data.is_logged_in = true
+            data.uid = (is_logged_in ? user.uid : null)
+            data.name = user.displayName
+            return data
+        })
+    }
 });

@@ -4,10 +4,9 @@
     import "$lib/firebase"
     import Header from "./Header.svelte";
     import { localStore } from "$lib/data"
-    import { beforeUpdate, onMount } from "svelte"
+    import { onMount } from "svelte"
     import { logout } from "$lib/firebase"
 
-    
 </script>
 
 <!--  -->
