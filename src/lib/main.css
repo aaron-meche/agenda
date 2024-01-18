@@ -51,7 +51,7 @@
 :root{
 	--hue: 220;
 	--sat: 8%;
-	--strt: 8%;
+	--strt: 4%;
 	--diff: 4%;
 
 	--accent: hsl(var(--hue), 48%, 64%);

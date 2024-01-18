@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, get, onValue } from "firebase/database";
+import { getDatabase, ref, set, get, onValue, remove } from "firebase/database";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously, onAuthStateChanged, signOut } from 'firebase/auth';
-import { localStore } from "$lib/data";
+import { db } from "$lib/data";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDSo5LwVnxGGemhbuLabUE7ZRwDC1yBLtg",
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 let is_logged_in, uid
-localStore.subscribe(data => {
+db.subscribe(data => {
     is_logged_in = data.is_logged_in
     uid = data.uid
 })
@@ -29,12 +29,6 @@ function getUserRef(path) {
 }
     // Write
 export function writeData(path, value) {
-    if (typeof document == "undefined") return
-
-    set(getUserRef(path), value);
-}
-    // Push
-export function pushData(path, value) {
     if (typeof document == "undefined") return
 
     set(getUserRef(path), value);
@@ -57,15 +51,22 @@ export function subscribeData(path, callback) {
         if (snapshot.exists()) {
             callback(snapshot.val())
         }
+        else {
+            callback([])
+        }
     })
 }
     // Delete
 export function deleteData(path, callback) {
     if (typeof document == "undefined") return
 
-    database.ref(`users/${uid}/${path}`).remove()
-    console.log("Done")
-    callback()
+    remove(getUserRef(path))
+        .then(() => {
+            if (callback) callback()
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 // Authentication
@@ -100,10 +101,14 @@ export function signInAsGuest() {
 }
     // Authentication Handler
 function handleSignIn() {
-    let uid
-    localStore.subscribe(data => {
-        uid = data.uid
-    })
+    // readData("setup_complete", val => {
+    //     if (val.length > 0) {
+    //         window.open("/home-view", "_self")
+    //     }
+    //     else {
+    //         window.open("/setup", "_self")
+    //     }
+    // })
 }
     // Logout
 export function logout() {
@@ -112,15 +117,18 @@ export function logout() {
 }
     // Handle Accounts
 onAuthStateChanged(auth, (user) => {
-    is_logged_in = (user ? true : false)
-    uid = is_logged_in ? user.uid : null
-
     if (user) {
-        localStore.update(data => {
-            data.is_logged_in = true
-            data.uid = (is_logged_in ? user.uid : null)
-            data.name = user.displayName
-            return data
+        writeData("last-login", Date.now())
+        db.update(db => {
+            db.user = user
+            db.is_logged_in = true
+            db.uid = user.uid
+            db.name = user.displayName
+            return db
         })
+    }
+    else {
+        is_logged_in = false
+        uid = null
     }
 });

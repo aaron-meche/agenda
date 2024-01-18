@@ -3,10 +3,25 @@
     import "$lib/style.css"
     import "$lib/firebase"
     import Header from "./Header.svelte";
-    import { localStore } from "$lib/data"
-    import { onMount } from "svelte"
-    import { logout } from "$lib/firebase"
+    import { db } from "$lib/data"
+    import { beforeUpdate, onMount } from "svelte"
+    import { subscribeData } from "$lib/firebase"
 
+    let app
+    let is_logged_in = false
+    db.subscribe(data => {
+        is_logged_in = data.is_logged_in
+    })
+    onMount(() => {
+        if (is_logged_in) {
+            subscribeData("", data => {
+                app.style.opacity = 1
+            })
+        }
+        else {
+            app.style.opacity = 1
+        }
+    })
 </script>
 
 <!--  -->
@@ -14,7 +29,7 @@
 <!-- <img class="wallpaper" src="wallpaper.jpg" alt="wallpaper"> -->
 <!-- <div class="wallpaper-cover"></div> -->
 
-<div class="app">
+<div class="app" bind:this={app}>
     <div class="head">
         <Header />
 
@@ -32,6 +47,11 @@
 <!--  -->
 
 <style>
+    .app{
+        opacity: 0.5;
+        transition: opacity 500ms;
+    }
+
     .head{
         position: sticky;
         top: 0;

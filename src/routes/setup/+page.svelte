@@ -1,40 +1,45 @@
 <script>
-    import { subscribeData } from "$lib/firebase"
-    import { onMount } from "svelte";
-    import ClassMenu from "./ClassMenu.svelte";
+    import { writeData, subscribeData } from "$lib/firebase"
+    import ClassMenu from "./ClassMenu.svelte"
 
     let menu_wrapper
-    let menu_title
-    let confirmation_text = ""
-    let active_icon = 0
-    let class_name = ""
-    let credit_hours = 0
+    let days = ["Mon","Tues","Wed","Thurs","Fri"]
+    days = ["M","T","W","Th","F"]
+
+    $: class_ids = []
+    $: classes = []
+    subscribeData("classes", data => {
+        class_ids = Object.keys(data)
+        classes = Object.values(data)
+    })
+
+    let editing_item = null
     function createClass() {
-        menu_title = "Create a Class"
-        confirmation_text = "Create Class"
-        active_icon = 0
-        class_name = ""
-        credit_hours = 0
+        editing_item = null
         openMenu()
     }
     function editClass(item) {
-        menu_title = "Edit Class"
-        confirmation_text = "Update Class"
-        active_icon = item.icon
-        class_name = item.class_name
-        credit_hours = item.credit_hours
+        editing_item = item
+        item.uid = class_ids[classes.indexOf(item)]
         openMenu()
     }
     function openMenu() {
         menu_wrapper.style.display = "block"
     }
 
-    let classes = []
-    subscribeData("classes", data => {
-        classes = Object.values(data)
-        console.log(classes)
-    });
+    function convertToPrettyTime(time24hr) {
+        const [hours, minutes] = time24hr.split(':')
+        const hour = parseInt(hours, 10);
+        const minute = parseInt(minutes, 10)
+        const period = hour >= 12 ? 'PM' : 'AM'
+        const prettyHour = hour % 12 === 0 ? 12 : hour % 12
+        const prettyMinute = minute < 10 ? `0${minute}` : minute
+        return `${prettyHour}:${prettyMinute} ${period}`
+    }
 
+    function createAgenda() {
+        writeData("setup_complete", true, () => window.open("/home-view", "_self"))
+    }
 </script>
 
 <!--  -->
@@ -49,8 +54,14 @@
                 <button class="item icon" on:click={() => editClass(item)}>
                     <i class="{item.icon}"></i>
                     <div class="data">
-                        {item.class_name}
-                        <div class="status">{item.credit_hours}.0 credit hours</div>
+                        <div class="title">{item.class_name}</div>
+                        <div class="status">{convertToPrettyTime(item.time_start)} - {convertToPrettyTime(item.time_end)}</div>
+                        <div class="status">
+                            {#each item.days as day, i}
+                                {day ? days[i] + " " : ""}
+                            {/each}
+                        </div>
+                        <div class="status"> {item.credit_hours} hours</div>
                     </div>
                 </button>
             {/each}
@@ -74,13 +85,7 @@
     <!-- <button class="class-menu-backdrop" on:click={closeMenuWrapper}></button> -->
     <div class="class-menu-backdrop"></div>
     <div class="class-menu">
-        <ClassMenu 
-            menu_title={menu_title}
-            confirmation_text={confirmation_text}
-            active_icon={active_icon} 
-            class_name={class_name} 
-            credit_hours={credit_hours} 
-        />
+        <ClassMenu item={editing_item} />
     </div>
 </div>
 
@@ -111,11 +116,12 @@
 
     .class-menu{
         height: calc(100% - 4rem);
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 1rem 0;
+        width: fit-content;
+        position: fixed;
+        top: 2rem;
+        left: 50vw;
+        translate: -50% 0;
         overflow: auto;
+        border-radius: 0.5rem;
     }
 </style>

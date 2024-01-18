@@ -57,6 +57,7 @@
 }
 .horizontal-scroll.selector button.active{
     background: var(--l3);
+    color: var(--accent);
 }
 
 /* Title Bar Navigator */

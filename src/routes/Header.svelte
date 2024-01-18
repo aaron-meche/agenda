@@ -1,14 +1,13 @@
 <script>
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
-    import { localStore } from "$lib/data"
+    import { db } from "$lib/data"
 
     let is_logged_in, uid, name
-    localStore.subscribe(data => {
+    db.subscribe(data => {
         is_logged_in = data.is_logged_in
         uid = data.uid
         name = data.name
-        console.log(data)
     })
 </script>
 
@@ -20,15 +19,13 @@
         Agenda
     </div>
 
-    {#if is_logged_in}
-        <div class="right" style="margin-left: auto">
+    <div class="right" style="margin-left: auto">
+        {#if is_logged_in}
             {name}
-        </div>
-    {:else}
-        <div class="right" style="margin-left: auto">
-            January 8, 2023
-        </div>
-    {/if}
+        {:else}
+            
+        {/if}
+    </div>
 </div>
 
 

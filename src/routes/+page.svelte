@@ -1,25 +1,15 @@
 <script>
-    import { localStore } from "$lib/data"
-    import { signInWithGoogle, signInAsGuest } from "$lib/firebase"
+    import { db } from "$lib/data"
+    import { signInWithGoogle, signInAsGuest, subscribeData } from "$lib/firebase"
     import { onMount } from "svelte";
 
-    onMount(() => {
-        let user
-        localStore.subscribe(data => {
-            user = data.uid
-            if (user) {
-                window.open("/setup", "_self")
-            }
-        })
-    })
-
     let classes
-    localStore.subscribe(data => {
+    db.subscribe(data => {
         classes = data.classes
     })
 
     function openClass(id) {
-        localStore.update(data => {
+        db.update(data => {
             data.active_class_id = id
             return data
         })

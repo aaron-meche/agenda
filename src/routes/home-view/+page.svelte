@@ -1,5 +1,5 @@
 <script>
-    import { localStore } from "$lib/data"
+    import { db } from "$lib/data"
     import ClassGrid from "./ClassGrid.svelte";
 
 </script>

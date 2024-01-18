@@ -1,11 +1,11 @@
 <script>
-    import { localStore } from "$lib/data"
+    import { db } from "$lib/data"
     import { onMount } from "svelte";
 
     let active_class = {}
 
     onMount(() => {
-        localStore.subscribe(data => {
+        db.subscribe(data => {
             let classes = data.classes
             active_class = classes.find(item => item.id == data.active_class_id)
             console.log(active_class)
